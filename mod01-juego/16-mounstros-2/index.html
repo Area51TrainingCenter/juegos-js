@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf8">
+		<style>
+			body {
+				background-color: black;
+				margin:0;
+				padding:0;
+			}
+
+			canvas{
+				background-color: white;
+				margin:30px auto;
+				display: block;
+			}
+		</style>
+	</head>
+	<body>
+		
+		<canvas id="lienzo" width="722" height="642">
+		</canvas>
+
+		<script>
+			var elemCanvas = document.getElementById("lienzo");
+			var contexto = elemCanvas.getContext("2d");
+
+			var mounstros = [
+				{
+					x: 140,
+					y: 0,
+					ancho: 30,
+					altura: 30,
+					velocidadY: 2
+				},
+				{
+					x: 240,
+					y: 0,
+					ancho: 30,
+					altura: 30,
+					velocidadY: 4
+				},
+				{
+					x: 340,
+					y: 0,
+					ancho: 30,
+					altura: 30,
+					velocidadY: 5
+				},
+				{
+					x: 440,
+					y: 0,
+					ancho: 30,
+					altura: 30,
+					velocidadY: 6
+				}
+			];
+
+			function actualizar(){
+
+				mounstros.forEach(function(mounstro, indice) {
+					var limiteInferior = (mounstro.y + mounstro.altura + mounstro.velocidadY) > elemCanvas.height;
+
+					var limiteSuperior = (mounstro.y + mounstro.velocidadY) < 0;
+
+					if(limiteInferior || limiteSuperior) {
+						mounstro.velocidadY *= -1;
+					}
+
+					mounstro.y += mounstro.velocidadY;
+				});
+			}
+
+			function dibujar(){
+				contexto.clearRect(0, 0, elemCanvas.width, elemCanvas.height);
+				contexto.fillStyle = "red";
+
+				mounstros.forEach(function(mounstro, indice){
+					contexto.fillRect(mounstro.x, mounstro.y, mounstro.ancho, mounstro.altura);
+				})
+			}
+
+			function animar(){
+				actualizar();
+				dibujar();
+
+				animacion(animar);
+			}
+
+			var animacion = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.msRequestAnimationFrame || window.webkitRequestAnimationFrame;
+
+			animacion(animar);
+
+
+		</script>
+	</body>
+</html>
