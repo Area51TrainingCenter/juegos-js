@@ -20,9 +20,11 @@ var JuegoEstado = {
 		this.mama01 = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, "mama01");
 		this.mama01.anchor.setTo(0.5, 0.5);
 		this.mama01.scale.setTo(-1, 1);
-
+		this.mama01.angle = 45;
 	},
-	update: function(){}
+	update: function(){
+		this.mama01.angle += 1;
+	}
 };
 
 var game = new Phaser.Game(722, 642, Phaser.AUTO);
