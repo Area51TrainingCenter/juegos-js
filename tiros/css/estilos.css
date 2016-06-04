@@ -1,0 +1,507 @@
+body {
+	margin:0;
+	padding:0;
+}
+
+
+div.fondoInicial {
+	background-image:url(../imagenes/background_inicial.jpg);
+	width:722px;
+	height: 657px;
+}
+
+div.intro {
+	display: block;
+	margin:0 auto;
+}
+
+div.registro {
+	display: none;
+	margin:0 auto;
+}
+
+div.registro div.datos {
+	background-image:url(../imagenes/registro.png);
+	width:528px;
+	height:213px;
+	position: relative;
+	top:412px;
+	left:97px;
+}
+
+div.registro div.datos input {
+	border:0;
+	width:239px;
+	height: 27px;
+}
+
+div.registro div.datos input#txtNombres {
+  position: absolute;
+  top: 43px;
+  left: 7px;
+}
+
+div.registro div.datos input#txtDNI {
+  position: absolute;
+  top: 43px;
+  left: 281px;
+}
+
+div.registro div.datos input#txtCorreo {
+  position: absolute;
+  top: 81px;
+  left: 7px;
+}
+
+div.registro div.datos input#txtTelefono {
+  position: absolute;
+  top: 81px;
+  left: 281px;
+}
+
+div.registro div.datos input#txtCiudad {
+  position: absolute;
+  top: 120px;
+  left: 7px;	
+}
+
+div.registro div.datos div.ciudad {
+  width: 245px;
+  height: 22px;
+  position: absolute;
+  top: 121px;
+  left: 7px;
+  padding-top: 5px;
+  cursor: pointer;
+}
+
+div.registro div.datos div.check {
+	background-image:url(../imagenes/check.png);
+	background-position: right top;
+	width:17px;
+	height: 17px;
+	position: absolute;
+  	top: 128px;
+  	left: 285px;
+  	cursor: pointer;
+}
+
+div.registro div.datos a.terminos {
+	display: block;
+	position: absolute;
+  	width: 200px;
+  	height: 29px;
+  	top: 120px;
+  	left: 307px;
+}
+
+div.registro div.datos a.btnContinuar {
+  display: block;
+  position: absolute;
+  width: 112px;
+  height: 41px;
+  top: 170px;
+  left: 207px;
+}
+
+div.participa {
+	background-image: url(../imagenes/participa.png);
+	width:638px;
+	height: 219px;
+	position:relative;
+	top:407px;
+	left:39px;
+}
+
+div.participa a {
+	display: block;
+	width:110px;
+	height: 40px;
+	position: absolute;
+	top: 177px;
+	left: 106px;
+}
+
+div.eleccion {
+	background-image: url(../imagenes/eleccion.jpg);
+	position:relative;
+	display: none;
+	width:722px;
+	height: 657px;	
+	margin:0 auto;
+}
+
+div.eleccion div.checkEleccion {
+	background-image: url(../imagenes/check_eleccion.png);
+	width:15px;
+	height: 15px;
+	position:absolute;
+	z-index: 1;
+	cursor: pointer;
+}
+
+div.eleccion div.jugador1 {
+  	top: 232px;
+  	left: 236px;	
+}
+
+div.eleccion div.jugador2 {
+  	top: 232px;
+  	left: 399px;	
+}
+
+div.eleccion div.jugador3 {
+  	top: 232px;
+  	left: 563px;	
+}
+
+div.eleccion div.pelota1 {
+  	top: 400px;
+  	left: 236px;	
+}
+
+div.eleccion div.pelota2 {
+  	top: 400px;
+  	left: 399px;	
+}
+
+div.eleccion div.pelota3 {
+  	top: 400px;
+  	left: 563px;	
+}
+
+div.eleccion a.btnInstrucciones {
+	position:absolute;
+	left: 116px;
+  	top: 537px;
+  	width: 231px;
+  	height: 55px;
+	z-index:2;
+}
+
+div.eleccion a.btnIniciar {
+	position:absolute;
+  	left: 374px;
+  	top: 537px;
+  	width: 207px;
+  	height: 55px;
+	z-index:2;
+}
+
+div.eleccion div.instrucciones {
+	position: absolute;
+	background-image:url(../imagenes/instrucciones.png);
+	background-repeat: no-repeat;
+	background-position: 50px 51px;
+	width:722px;
+	height: 657px;	
+	background-color:rgba(0,0,0,0.85);
+	display: none;
+	z-index:3;
+}
+
+div.eleccion div.instrucciones a.btnIniciar {
+  top: 568px;
+  left: 363px;
+  width: 138px;
+}
+
+div.eleccion div.instrucciones a.btnRegresar {
+  position: absolute;
+  top: 568px;
+  left: 213px;
+  width: 138px;
+  height: 55px;
+}
+
+div.zonaJuego {
+	position:absolute;
+	width:722px;
+	height: 657px;
+	display: none;
+	margin:0 auto;
+}
+
+div.zonaJuego div.mensaje {
+	position:absolute;
+	width:722px;
+	height: 657px;
+	background-image:url(../imagenes/tupuedes.jpg);
+	z-index: 2;	
+}
+
+div.zonaJuego div.zonaCanvas {
+	position:absolute;
+	top:0;
+	left:0;
+	width:722px;
+	height: 657px;
+	z-index:1;
+}
+
+div.zonaJuego  div.zonaCanvas canvas#juego {
+	position:absolute;
+	top:0;
+	left:0;
+	display: block;
+	z-index:1;
+}
+
+div.zonaJuego  div.zonaCanvas div.zonaNombre {
+	position: absolute;
+  bottom: 0;
+  left: 186px;
+  background-image: url(../imagenes/zonaNombre.png);
+  width: 312px;
+  height: 29px;
+  padding-left: 35px;
+  padding-top: 16px;
+  z-index: 2;
+  font-family: Arial;
+  font-size: 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+div.zonaJuego  div.zonaCanvas div.score {
+	position: absolute;
+	top:39px;
+	left:23px;
+	background-image: url(../imagenes/score.png);
+	width:171px;
+	height: 50px;
+	z-index:2;
+	display: none;
+}
+
+div.zonaJuego  div.zonaCanvas div.score div.numero {
+	position:absolute;
+	font-family: Arial;
+	font-size:25px;
+	font-weight: bold;
+	top:16px;
+	left:129px;
+}
+
+div.zonaJuego  div.zonaCanvas div.logo {
+	position: absolute;
+	top:30px;
+	left:268px;
+	background-image: url(../imagenes/logo.png);
+	width:194px;
+	height: 199px;
+	z-index:2;
+}
+
+div.zonaJuego  div.zonaCanvas div.pelotasRestantes {
+	position: absolute;
+	top:47px;
+  	left: 484px;
+  /* width: 140px; */
+  	width: 234px;
+	height: 38px;
+	z-index:2;
+}
+
+div.zonaJuego  div.zonaCanvas div.pelotasRestantes div.pelotaScore {
+	float:left;
+	width:38px;
+	height: 38px;
+	margin-right:8px;
+	background-image: url(../imagenes/pelota_score.png);
+}
+
+div.zonaJuego  div.mensajeGol {
+	position: absolute;
+	background-image: url(../imagenes/gol.jpg);
+	width:722px;
+	height: 657px;
+	z-index:2;
+	display: none;
+}
+
+div.zonaJuego  div.mensajeGol div.btnVolver {
+	position: absolute;
+  	width: 229px;
+  	height: 52px;
+	top: 487px;
+	left: 256px;
+  	cursor: pointer;  	
+}
+
+div.zonaJuego  div.mensajeGol a {
+	display: block;
+  	position: absolute;
+  	width: 229px;
+  	height: 52px;
+  	top: 544px;
+  	left: 254px;
+}
+
+div.zonaJuego  div.mensajeFallo {
+	position: absolute;
+	background-image: url(../imagenes/fallo.jpg);
+	width:722px;
+	height: 657px;
+	z-index:2;
+	display: none;
+}
+
+div.zonaJuego  div.mensajeFallo a {
+	display: block;
+  	position: absolute;
+  	width: 229px;
+  	height: 52px;
+  	top: 392px;
+  	left: 228px;
+}
+
+div.zonaJuego  div.tiro1, 
+div.zonaJuego  div.tiro2,
+div.zonaJuego  div.tiro3,
+div.zonaJuego  div.tiro4,
+div.zonaJuego  div.falta1,
+div.zonaJuego  div.falta2 {
+	position: absolute;
+	background-color:rgba(0,0,0,0.85);	
+	background-position: 148px 29px;
+	background-repeat: no-repeat;
+	width:722px;
+	height: 657px;
+	z-index:2;
+	display: none;
+}
+
+div.zonaJuego  div.falta1 {
+	background-image: url(../imagenes/1falta.png);
+
+}
+
+div.zonaJuego  div.falta2 {
+	background-image: url(../imagenes/2faltan.png);
+
+}
+
+div.zonaJuego  div.tiro1 {
+	background-image: url(../imagenes/1tiro.png);
+
+}
+
+div.zonaJuego  div.tiro2 {
+	background-image: url(../imagenes/2tiros.png);
+}
+
+div.zonaJuego  div.tiro3 {
+	background-image: url(../imagenes/3tiros.png);
+}
+
+div.zonaJuego  div.tiro4 {
+	background-image: url(../imagenes/4tiros.png);
+}
+
+
+.modal-demo {
+	background-color: #FFF;
+	width: 600px;
+	border: #000 solid 1px;
+	border-radius: 10px;
+	box-shadow: 0 8px 6px -6px black;
+	text-align: left;
+	display: none;
+	font-family: Arial;
+	font-size:13px;
+}
+
+.modal-demo .text {
+	height: 200px;
+	overflow-x:hidden;
+	overflow-y:scroll;
+	padding: 0 20px 20px 20px;
+}
+
+.modal-demo .title {
+	padding: 10px 20px 15px 20px;
+	line-height: 18px;
+	font-size: 18px;
+	border-bottom: #CCC solid 1px;
+}
+
+.close:hover, .close:focus {
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
+	filter: alpha(opacity=50);
+	opacity: .5;
+}
+
+button.close {
+	-webkit-appearance: none;
+	padding: 0;
+	cursor: pointer;
+	background: 0 0;
+	border: 0;
+}
+
+.close {
+	position: absolute;
+	top: 15px;
+	right: 15px;
+}
+
+.close {
+	float: right;
+	font-size: 21px;
+	font-weight: 700;
+	line-height: 1;
+	color: #000;
+	text-shadow: 0 1px 0 #fff;
+	filter: alpha(opacity=20);
+	opacity: .2;
+}
+
+.seleccionUsuario {
+  position: absolute;
+  width: 142px;
+  height: 99px;
+  z-index: 10;
+  cursor:pointer;
+}
+
+.seleccionJugador1 {
+  top: 227px;
+  left: 115px;
+}
+
+.seleccionJugador2 {
+  top: 227px;
+  left: 278px;
+}
+
+.seleccionJugador3 {
+  top: 227px;
+  left: 441px;
+}
+
+.seleccionPelota1 {
+  top: 395px;
+  left: 115px;
+}
+
+.seleccionPelota2 {
+  top: 395px;
+  left: 278px;
+}
+
+.seleccionPelota3 {
+  top: 395px;
+  left: 441px;
+}
+
+div.nopermisos {
+	position:absolute;
+	background-image:url(../imagenes/nopermisos.jpg);
+	background-repeat: no-repeat;	
+	width:722px;
+	height: 657px;
+	display: none;	
+}
