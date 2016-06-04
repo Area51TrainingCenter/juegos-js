@@ -30,6 +30,7 @@ var JuegoEstado = {
 		this.mascota.anchor.setTo(0.5, 0.5);
 		this.mascota.inputEnabled = true;
 		this.mascota.input.enableDrag(true);
+		this.mascota.animations.add("divertido",[1,2,3,2,1,2,3,2,1], 8, false);
 
 		this.dulce = this.game.add.sprite(POSICION_INICIAL, this.game.height-DY, "dulce");
 		this.dulce.inputEnabled = true;
@@ -77,6 +78,7 @@ var JuegoEstado = {
 				elemento.destroy();
 				this.deseleccionar();
 				this.mascotaMoviendose = false;
+				this.mascota.animations.play("divertido");
 			}, this);
 
 			animacionMascotaDesp.start();
