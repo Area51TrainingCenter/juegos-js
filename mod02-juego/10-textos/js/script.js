@@ -33,12 +33,15 @@ var JuegoEstado = {
 
 		this.mamasData.forEach(function(mama){
 			var objMama = this.grupoMamas.create(-64, this.game.world.centerY, mama.clave);
+			objMama.customParams = {texto: mama.mensaje};
 			objMama.anchor.setTo(0.5, 0.5);
 		}, this);
 
 		this.mamaActual = this.grupoMamas.next();
 		this.mamaActual = this.grupoMamas.previous();
 		this.mamaActual.position.x  = this.game.world.centerX;
+
+		this.mostrarMensaje(this.mamaActual);
 
 		this.flechaIzq = this.game.add.sprite(MARGEN_FLECHA, this.game.world.centerY, "flecha");
 		this.flechaIzq.anchor.setTo(0.5, 0.5);
@@ -62,6 +65,8 @@ var JuegoEstado = {
 		if(this.mamaMoviendose) return
 
 		this.mamaMoviendose = true;
+
+		this.texto.visible = false;
 
 		var direccion = sprite.customParams.direccion;
 		var nuevaMama;
@@ -88,11 +93,26 @@ var JuegoEstado = {
 		animacionMamaNueva.to({x: this.game.world.centerX}, 1000);
 		animacionMamaNueva.onComplete.add(function(){
 			this.mamaMoviendose = false;
+			this.mamaActual = nuevaMama;
+			this.mostrarMensaje(this.mamaActual);
 		}, this);
 
-		animacionMamaNueva.start();
+		animacionMamaNueva.start();	
+	},
+	mostrarMensaje: function(mama){
+		var estilo = {
+			font: "bold 30px Arial",
+			fill: "blue",
+			align: "center"
+		};
 
-		this.mamaActual = nuevaMama;
+		if(!this.texto) {
+			this.texto = this.game.add.text(this.game.world.centerX, this.game.height-120,'', estilo);
+			this.texto.anchor.setTo(0.5, 0.5);
+		}
+
+		this.texto.setText(mama.customParams.texto);
+		this.texto.visible = true;
 	}
 };
 
