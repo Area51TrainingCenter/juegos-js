@@ -36,6 +36,7 @@ var JuegoEstado = {
 			salud: 100
 		};
 
+
 		this.dulce = this.game.add.sprite(POSICION_INICIAL, this.game.height-DY, "dulce");
 		this.dulce.inputEnabled = true;
 		this.dulce.events.onInputDown.add(this.seleccionar, this);
@@ -67,6 +68,7 @@ var JuegoEstado = {
 		};
 
 		this.botones = [this.dulce, this.manzana, this.pato, this.rotar];		
+		this.game.time.events.loop(Phaser.Timer.SECOND * 4, this.reducir, this);
 	},
 	rotacion: function(sprite, evento){
 		if(this.itemSeleccionado || this.mascotaMoviendose) return;
@@ -131,7 +133,13 @@ var JuegoEstado = {
 
 		if(diversion<=0 || salud<=0) {
 			console.log("Mascota se murió");
+			this.mascota.frame = 4;
 		}
+	},
+	reducir: function(){
+		this.mascota.customParams.diversion -= 20;
+		this.mascota.customParams.salud -=20;
+		console.log(this.mascota.customParams);
 	}
 };
 
