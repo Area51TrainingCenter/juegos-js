@@ -12,6 +12,8 @@ var JuegoEstado = {
 
 		this.POSICIONY_BOTONES = 535;
 
+		this.VELOCIDAD_BARRIL = 200;
+
 		this.game.world.setBounds(0,0,360,700);
 	},
 	preload: function(){
@@ -27,6 +29,8 @@ var JuegoEstado = {
 		this.load.image("meta", "img/gorilla3.png");
 
 		this.load.spritesheet("fuego", "img/fire_spritesheet.png", 20, 21, 2, 1, 1);
+
+		this.load.image("barril", "img/barrel.png");
 	},
 	create: function(){
 		this.datos = JSON.parse(this.game.cache.getText("data"));
@@ -69,6 +73,13 @@ var JuegoEstado = {
 		this.grupoFuegos.setAll("body.allowGravity", false);
 		this.grupoFuegos.setAll("body.immovable", true);
 
+		this.grupoBarriles = this.game.add.group();
+		this.grupoBarriles.enableBody = true;
+
+		this.crearBarril();
+
+		this.timer = this.game.time.events.loop(Phaser.Timer.SECOND * 5, this.crearBarril, this);
+
 		this.teclas = this.game.input.keyboard.addKeys({
 			LEFT: Phaser.KeyCode.LEFT,
 			RIGHT: Phaser.KeyCode.RIGHT,
@@ -86,6 +97,11 @@ var JuegoEstado = {
 
 		this.game.physics.arcade.overlap(this.meta, this.jugador, this.hayGanador);
 		this.game.physics.arcade.overlap(this.grupoFuegos, this.jugador, this.finJuego);
+
+		this.game.physics.arcade.collide(this.grupoBarriles, this.grupoPlataformas);
+		this.game.physics.arcade.collide(this.grupoBarriles, this.piso);
+
+		this.game.physics.arcade.collide(this.grupoBarriles, this.jugador, this.finJuego);
 
 		this.jugador.body.velocity.x = 0;
 
@@ -106,6 +122,15 @@ var JuegoEstado = {
 		if((this.teclas.UP.isDown || this.jugador.customParams.up) && this.jugador.body.touching.down){
 			this.jugador.body.velocity.y = -this.VELOCIDAD_SALTO;
 		}
+
+		this.grupoBarriles.forEach(function(elemento){
+			var estaFuera = (elemento.x < 10 & elemento.y > 600) ? true: false;
+			
+			if(estaFuera) {
+				elemento.kill();
+			}
+			
+		})
 	},
 	cargarControles: function(){
 		this.flechaIzq = this.game.add.sprite(20, this.POSICIONY_BOTONES, "flecha");
@@ -158,6 +183,21 @@ var JuegoEstado = {
 	},
 	finJuego: function(){
 		game.state.start("JuegoEstado");
+	},
+	crearBarril: function(){
+		var barril = this.grupoBarriles.getFirstExists(false);
+
+		if(!barril) {
+			barril = this.grupoBarriles.create(this.meta.width/2, this.meta.height/2, "barril");
+		} else {
+			barril.reset(this.meta.width/2, this.meta.height/2);	
+		}
+		
+		barril.body.velocity.x = this.VELOCIDAD_BARRIL;
+		barril.body.collideWorldBounds = true;
+		barril.body.bounce.setTo(1, 0.6);
+
+		console.log(this.grupoBarriles);
 	}
 
 };
