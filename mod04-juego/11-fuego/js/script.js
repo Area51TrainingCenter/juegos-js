@@ -8,7 +8,7 @@ var JuegoEstado = {
 		this.game.physics.arcade.gravity.y = 1000;
 
 		this.VELOCIDAD_JUGADOR = 200;
-		this.VELOCIDAD_SALTO = 550;
+		this.VELOCIDAD_SALTO = 570;
 
 		this.POSICIONY_BOTONES = 535;
 
@@ -23,6 +23,8 @@ var JuegoEstado = {
 		this.load.image("salto", "img/actionButton.png");	
 
 		this.load.text("data", "data/niveles.json");
+
+		this.load.image("meta", "img/gorilla3.png");
 	},
 	create: function(){
 		this.datos = JSON.parse(this.game.cache.getText("data"));
@@ -50,6 +52,10 @@ var JuegoEstado = {
 		this.game.physics.arcade.enable(this.jugador);
 		this.jugador.body.collideWorldBounds = true;
 
+		this.meta = this.game.add.sprite(this.datos.posicionMeta.x, this.datos.posicionMeta.y, "meta");
+		this.meta.anchor.set(0.5);
+		this.game.physics.arcade.enable(this.meta);
+
 		this.teclas = this.game.input.keyboard.addKeys({
 			LEFT: Phaser.KeyCode.LEFT,
 			RIGHT: Phaser.KeyCode.RIGHT,
@@ -62,7 +68,11 @@ var JuegoEstado = {
 	},
 	update: function(){
 		this.game.physics.arcade.collide(this.jugador, this.grupoPlataformas);
+		this.game.physics.arcade.collide(this.meta, this.grupoPlataformas);
 		this.game.physics.arcade.collide(this.jugador, this.piso);
+
+		this.game.physics.arcade.overlap(this.meta, this.jugador, this.hayGanador);
+
 
 		this.jugador.body.velocity.x = 0;
 
@@ -130,6 +140,9 @@ var JuegoEstado = {
 	},
 	pararDeSaltar: function(){
 		this.jugador.customParams.up = false;	
+	},
+	hayGanador: function(){
+		console.log("Hay ganador");
 	}
 
 };
