@@ -8,26 +8,28 @@ var JuegoEstado = {
 		this.game.physics.arcade.gravity.y = 1000;
 
 		this.VELOCIDAD_JUGADOR = 200;
-		this.VELOCIDAD_SALTO = 500;
+		this.VELOCIDAD_SALTO = 550;
 
 		this.POSICIONY_BOTONES = 535;
 
 		this.plataformaData = [
 			{x:20, y:200},
-			{x:80, y: 300},
-			{x: 200, y: 400}
+			{x: 200, y: 350},
+			{x:80, y: 500}
 		];
+
+		this.game.world.setBounds(0,0,360,700);
 	},
 	preload: function(){
 		this.load.image("piso", "img/ground.png");
 		this.load.image("plataforma", "img/platform.png");
-		this.load.spritesheet("jugador", "img/player_spritesheet.png", 28, 30, 5, 1, 1);
+		this.load.spritesheet("jugador", "img/player_spritesheet.png", 28, 30, 5, 0, 1);
 
 		this.load.image("flecha", "img/arrowButton.png");
 		this.load.image("salto", "img/actionButton.png");	
 	},
 	create: function(){
-		this.piso = this.game.add.sprite(0, this.game.height-72, "piso");
+		this.piso = this.game.add.sprite(0, this.game.world.height-72, "piso");
 		this.game.physics.arcade.enable(this.piso);
 		this.piso.body.allowGravity = false;
 		this.piso.body.immovable = true;
@@ -44,8 +46,11 @@ var JuegoEstado = {
 		
 
 		this.jugador = this.game.add.sprite(40, 100, "jugador", 3);
+		this.jugador.anchor.set(0.5);
 		this.jugador.customParams = {};
+		this.jugador.animations.add("correr", [0,1,2,1], 6, true);
 		this.game.physics.arcade.enable(this.jugador);
+		this.jugador.body.collideWorldBounds = true;
 
 		this.teclas = this.game.input.keyboard.addKeys({
 			LEFT: Phaser.KeyCode.LEFT,
@@ -54,6 +59,8 @@ var JuegoEstado = {
 		});		
 
 		this.cargarControles();
+
+		this.game.camera.follow(this.jugador);
 	},
 	update: function(){
 		this.game.physics.arcade.collide(this.jugador, this.grupoPlataformas);
@@ -61,10 +68,19 @@ var JuegoEstado = {
 
 		this.jugador.body.velocity.x = 0;
 
+
 		if(this.teclas.RIGHT.isDown || this.jugador.customParams.right){
 			this.jugador.body.velocity.x = this.VELOCIDAD_JUGADOR;
+			this.jugador.scale.setTo(-1, 1);
+			this.jugador.animations.play("correr");
 		} else if(this.teclas.LEFT.isDown || this.jugador.customParams.left) {
 			this.jugador.body.velocity.x = -this.VELOCIDAD_JUGADOR;
+			this.jugador.scale.setTo(1, 1);
+			this.jugador.animations.play("correr");
+		} else if((this.teclas.UP.isDown || this.jugador.customParams.up)){
+			this.jugador.frame = 2;
+		} else {
+			this.jugador.frame = 3;
 		}
 
 		if((this.teclas.UP.isDown || this.jugador.customParams.up) && this.jugador.body.touching.down){
@@ -94,6 +110,10 @@ var JuegoEstado = {
 		this.flechaIzq.alpha = 0.5;
 		this.flechaDer.alpha = 0.5;
 		this.saltar.alpha = 0.5;
+
+		this.flechaIzq.fixedToCamera=true;
+		this.flechaDer.fixedToCamera=true;
+		this.saltar.fixedToCamera=true;
 	},
 	moverse:function(sprite, evento){
 		if(sprite.customParams.sentido==1) {

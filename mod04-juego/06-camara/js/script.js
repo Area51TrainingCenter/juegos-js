@@ -8,15 +8,17 @@ var JuegoEstado = {
 		this.game.physics.arcade.gravity.y = 1000;
 
 		this.VELOCIDAD_JUGADOR = 200;
-		this.VELOCIDAD_SALTO = 500;
+		this.VELOCIDAD_SALTO = 550;
 
 		this.POSICIONY_BOTONES = 535;
 
 		this.plataformaData = [
 			{x:20, y:200},
-			{x:80, y: 300},
-			{x: 200, y: 400}
+			{x: 200, y: 350},
+			{x:80, y: 500}
 		];
+
+		this.game.world.setBounds(0,0,363,700);
 	},
 	preload: function(){
 		this.load.image("piso", "img/ground.png");
@@ -27,7 +29,7 @@ var JuegoEstado = {
 		this.load.image("salto", "img/actionButton.png");	
 	},
 	create: function(){
-		this.piso = this.game.add.sprite(0, this.game.height-72, "piso");
+		this.piso = this.game.add.sprite(0, this.game.world.height-72, "piso");
 		this.game.physics.arcade.enable(this.piso);
 		this.piso.body.allowGravity = false;
 		this.piso.body.immovable = true;
@@ -54,6 +56,8 @@ var JuegoEstado = {
 		});		
 
 		this.cargarControles();
+
+		this.game.camera.follow(this.jugador);
 	},
 	update: function(){
 		this.game.physics.arcade.collide(this.jugador, this.grupoPlataformas);
@@ -94,6 +98,10 @@ var JuegoEstado = {
 		this.flechaIzq.alpha = 0.5;
 		this.flechaDer.alpha = 0.5;
 		this.saltar.alpha = 0.5;
+
+		this.flechaIzq.fixedToCamera=true;
+		this.flechaDer.fixedToCamera=true;
+		this.saltar.fixedToCamera=true;
 	},
 	moverse:function(sprite, evento){
 		if(sprite.customParams.sentido==1) {
