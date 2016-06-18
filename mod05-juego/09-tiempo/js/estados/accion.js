@@ -110,6 +110,11 @@ Juego.AccionEstado = {
 		this.vidas--;
 		this.mostrarVidas();
 		this.sndMisil.play();
+
+		if(this.vidas <= 0) {
+			this.finJuego();
+		}
+
 	},
 	mostrarVidas: function(){
 		this.vidasMensaje.text = "Vidas = " + this.vidas;
@@ -117,6 +122,29 @@ Juego.AccionEstado = {
 	actualizarTiempo: function(){
 		this.tiempo--;
 		this.tiempoMensaje.text = "Tiempo = " + this.tiempo;
+
+		if(this.tiempo<=0){
+			this.finJuego();
+		}
+	},
+	finJuego: function(){
+		this.piso.stopScroll();
+		this.fondo.stopScroll();
+		this.primerPlano.stopScroll();
+
+		this.game.time.removeAll();
+
+		this.sndMusica.stop();
+
+		this.grupoMisiles.setAll("body.velocity.x", 0);
+		this.grupoMonedas.setAll("body.velocity.x", 0);
+		this.jugador.body.allowGravity = false;
+
+		this.game.physics.arcade.gravity.y = 0;
+
+		var tablero = new Juego.Tablero(this.game);
+		tablero.mostrar(this.puntaje);
+
 	}
 
 
