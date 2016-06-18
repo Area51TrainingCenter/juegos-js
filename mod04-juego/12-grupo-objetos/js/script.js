@@ -198,6 +198,9 @@ var JuegoEstado = {
 		barril.body.bounce.setTo(1, 0.6);
 
 		console.log(this.grupoBarriles);
+	},
+	render: function(){
+		this.game.debug.body(this.jugador);
 	}
 
 };
