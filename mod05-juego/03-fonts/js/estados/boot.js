@@ -9,6 +9,9 @@ Juego.BootEstado = {
 	preload: function() {
 		this.load.image("logo", "img/logo.png");
 		this.load.image("barra", "img/preloader-bar.png");
+
+		this.load.bitmapFont("cr", "fonts/corporaterounded/font.png",
+			"fonts/corporaterounded/font.fnt");
 	},
 	create: function(){
 		Juego.game.state.start("PrecargaEstado");
