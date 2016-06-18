@@ -1,6 +1,11 @@
 var Juego = Juego || {};
 
 Juego.AccionEstado = {
+	init: function(){
+		this.puntaje = 0;
+		this.vidas = 3;
+		this.tiempo = 60;
+	},
 	create: function(){
 		this.fondo = this.game.add.tileSprite(0,0, this.game.width, 512, "fondo");
 		this.fondo.autoScroll(-100,0);
@@ -30,16 +35,36 @@ Juego.AccionEstado = {
 
 		this.tiempoMoneda = this.game.time.events.loop(Phaser.Timer.SECOND * 2, this.generadorMonedas, this);
 		this.tiempoMisiles = this.game.time.events.loop(Phaser.Timer.SECOND, this.generadorMisiles, this);
+
+		this.puntajeMensaje = this.game.add.bitmapText(30, 30, "cr", "Puntaje = 0", 30);
+		this.vidasMensaje = this.game.add.bitmapText(30, 60, "cr", "Vidas = " + this.vidas, 30);
+		this.tiempoMensaje = this.game.add.bitmapText(30, 90, "cr", "Tiempo = " + this.tiempo, 30);
+
+		this.sndRebote = this.game.add.audio("sndRebote");
+		this.sndMoneda = this.game.add.audio("sndMoneda");
+		this.sndMisil = this.game.add.audio("sndMisil");
+		this.sndJugador = this.game.add.audio("sndJugador");
+		this.sndMusica = this.game.add.audio("sndMusica");
+
+		this.sndMusica.play("", 0, true);
+
+		this.tiempoTotal = this.game.time.events.loop(Phaser.Timer.SECOND, this.actualizarTiempo, this);
 	},
 	update: function(){
 		this.game.physics.arcade.collide(this.jugador, this.piso, this.colisionPiso, null, this);
+		this.game.physics.arcade.overlap(this.jugador, this.grupoMonedas, this.colisionMoneda, null, this);
+		this.game.physics.arcade.overlap(this.jugador, this.grupoMisiles, this.colisionMisil, null, this);
 
 		if(this.game.input.activePointer.isDown){
 			this.jugador.body.velocity.y -= 25;
+			if(!this.sndJugador.isPlaying) {
+				this.sndJugador.play();	
+			}
 		}
 	},
 	colisionPiso: function(jugador, piso){
 		jugador.body.velocity.y = -200;
+		this.sndRebote.play();
 	},
 	generadorMonedas: function(){
 		var moneda = this.grupoMonedas.getFirstExists(false);
@@ -69,7 +94,30 @@ Juego.AccionEstado = {
 		misil.reset(posX, posY);
 		misil.revive();
 
-		this.grupoMisiles.add(misil);	}
+		this.grupoMisiles.add(misil);	
+	},
+	colisionMoneda: function(jugador, moneda){
+		moneda.kill();
+		this.puntaje++;
+		this.mostrarPuntaje();
+		this.sndMoneda.play();
+	},
+	mostrarPuntaje: function(){
+		this.puntajeMensaje.text = "Puntaje = " + this.puntaje;
+	},
+	colisionMisil: function(jugador, misil){
+		misil.kill();
+		this.vidas--;
+		this.mostrarVidas();
+		this.sndMisil.play();
+	},
+	mostrarVidas: function(){
+		this.vidasMensaje.text = "Vidas = " + this.vidas;
+	},
+	actualizarTiempo: function(){
+		this.tiempo--;
+		this.tiempoMensaje.text = "Tiempo = " + this.tiempo;
+	}
 
 
 

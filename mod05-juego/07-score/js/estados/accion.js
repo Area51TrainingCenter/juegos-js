@@ -1,6 +1,10 @@
 var Juego = Juego || {};
 
 Juego.AccionEstado = {
+	init: function(){
+		this.puntaje = 0;
+		this.vidas = 3;
+	},
 	create: function(){
 		this.fondo = this.game.add.tileSprite(0,0, this.game.width, 512, "fondo");
 		this.fondo.autoScroll(-100,0);
@@ -30,9 +34,14 @@ Juego.AccionEstado = {
 
 		this.tiempoMoneda = this.game.time.events.loop(Phaser.Timer.SECOND * 2, this.generadorMonedas, this);
 		this.tiempoMisiles = this.game.time.events.loop(Phaser.Timer.SECOND, this.generadorMisiles, this);
+
+		this.puntajeMensaje = this.game.add.bitmapText(30, 30, "cr", "Puntaje = 0", 30);
+		this.vidasMensaje = this.game.add.bitmapText(30, 60, "cr", "Vidas = " + this.vidas, 30);
 	},
 	update: function(){
 		this.game.physics.arcade.collide(this.jugador, this.piso, this.colisionPiso, null, this);
+		this.game.physics.arcade.overlap(this.jugador, this.grupoMonedas, this.colisionMoneda, null, this);
+		this.game.physics.arcade.overlap(this.jugador, this.grupoMisiles, this.colisionMisil, null, this);
 
 		if(this.game.input.activePointer.isDown){
 			this.jugador.body.velocity.y -= 25;
@@ -69,7 +78,24 @@ Juego.AccionEstado = {
 		misil.reset(posX, posY);
 		misil.revive();
 
-		this.grupoMisiles.add(misil);	}
+		this.grupoMisiles.add(misil);	
+	},
+	colisionMoneda: function(jugador, moneda){
+		moneda.kill();
+		this.puntaje++;
+		this.mostrarPuntaje();
+	},
+	mostrarPuntaje: function(){
+		this.puntajeMensaje.text = "Puntaje = " + this.puntaje;
+	},
+	colisionMisil: function(jugador, misil){
+		misil.kill();
+		this.vidas--;
+		this.mostrarVidas();
+	},
+	mostrarVidas: function(){
+		this.vidasMensaje.text = "Vidas = " + this.vidas;
+	}
 
 
 

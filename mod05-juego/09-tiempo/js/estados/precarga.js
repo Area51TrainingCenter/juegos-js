@@ -17,6 +17,12 @@ Juego.PrecargaEstado = {
 		this.load.spritesheet("jugador", "img/jetpack-ps.png", 229, 296, 4);
 		this.load.spritesheet("moneda", "img/coins-ps.png", 51, 51, 7);
 		this.load.spritesheet("misil", "img/missiles-ps.png", 361, 218, 4);
+		
+		this.load.audio("sndRebote", "audio/bounce.wav");
+		this.load.audio("sndMoneda", "audio/coin.wav");
+		this.load.audio("sndMisil", "audio/death.wav");
+		this.load.audio("sndJugador", "audio/rocket.wav");
+		this.load.audio("sndMusica", ["audio/Pamgaea.mp3", "audio/Pamgaea.ogg"]);
 	},
 	create: function(){
 		Juego.game.state.start("HomeEstado");
