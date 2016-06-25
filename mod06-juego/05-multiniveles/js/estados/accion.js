@@ -1,10 +1,18 @@
 var Juego = Juego || {};
 
 Juego.AccionEstado = {
-  init: function() {    
+  init: function(nuevoNivel) {    
 
     this.VELOCIDAD_CORRER = 180;
     this.VELOCIDAD_SALTAR = 500;
+
+    if(nuevoNivel) {
+      this.nivelActual = nuevoNivel;
+    } else {
+      this.nivelActual = 1;  
+    }
+
+    
 
     this.game.physics.arcade.gravity.y = 1000;    
     
@@ -43,7 +51,7 @@ Juego.AccionEstado = {
     }
   },
   cargarNivel: function(){  
-    this.map = this.game.add.tilemap("nivel");
+    this.map = this.game.add.tilemap("nivel" + this.nivelActual);
     this.map.addTilesetImage("patron-stylesheet", "mapaJuego");
 
     this.capaFondo = this.map.createLayer("capaFondo");
@@ -69,11 +77,11 @@ Juego.AccionEstado = {
 
     console.log(this.metaArreglo);
 
-    this.meta = this.game.add.sprite(this.metaArreglo[0].x, this.metaArreglo[0].y, this.metaArreglo[0].clave);
+    this.meta = this.game.add.sprite(this.metaArreglo[0].x, this.metaArreglo[0].y, this.metaArreglo[0].properties.clave);
     this.meta.anchor.setTo(.5);
     this.game.physics.arcade.enable(this.meta);
     this.meta.body.allowGravity = false;
-    this.meta.siguienteNivel = this.metaArreglo[0].nivel;
+    this.meta.siguienteNivel = this.metaArreglo[0].properties.nivel;
     // this.meta.body.immovable = true;
     
     /*this.plataforma = this.add.sprite(50, 180, 'plataforma');
@@ -149,6 +157,9 @@ Juego.AccionEstado = {
     return arr;
   },
   pasarNivel: function(jugador, meta) {
+    if(meta.siguienteNivel!=0) {
+      Juego.game.state.start("AccionEstado", true, false, meta.siguienteNivel);
+    }
     console.log("Nivel completo");
   }
 

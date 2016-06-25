@@ -17,7 +17,8 @@ Juego.CargadorEstado = {
 	    this.load.image('actionButton', 'img/actionButton.png');
 
 	    this.load.image("mapaJuego", "img/tiles_spritesheet.png");
-	    this.load.tilemap("nivel", "assets/nivel.json", null, Phaser.Tilemap.TILED_JSON);   		
+	    this.load.tilemap("nivel1", "assets/nivel1.json", null, Phaser.Tilemap.TILED_JSON);   		
+	    this.load.tilemap("nivel2", "assets/nivel2.json", null, Phaser.Tilemap.TILED_JSON);   		
 	},
 	create: function(){
 		Juego.game.state.start("AccionEstado");
