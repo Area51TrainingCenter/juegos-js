@@ -34,7 +34,12 @@ Juego.AccionEstado = {
     this.jugador.body.velocity.x = 0;
 
 
-    if(this.jugador.bottom==this.game.world.height) this.finJuego();
+    if(this.jugador.bottom==this.game.world.height){
+      if(navigator.vibrate) {
+          navigator.vibrate(100);
+      }
+      this.finJuego();  
+    } 
 
     if(this.cursors.left.isDown || this.jugador.customParams.estaMoviendoIzquierda) {
       this.jugador.body.velocity.x = -this.VELOCIDAD_CORRER;
